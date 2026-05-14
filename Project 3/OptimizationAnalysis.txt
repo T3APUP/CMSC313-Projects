@@ -1,0 +1,18 @@
+Original c file (not counting comments/whitespace): 56 lines
+
+Optimization level 0 (-O0): 269 lines
+
+Optimization level 1 (-O1): 235 lines
+
+Optimization level 3 (-O3): 235 lines
+
+
+Levels 1 and 3 are identical in length and marginally different on some lines. Level 3 appears to utilize fewer direct values and rely more on operations between registers.
+They also use different labels for the some of the same sections of code (from the original file). Level three notably stores section ".text.startup" in a register as section type progbits,
+which neither level 0 nor 1 do. This flags that section/data as being initialized and that it should be copied from the object file to the executable.
+Level 0 is longer and contains many more direct value - register operations than the other two assembly files, but is also the most human-readable and uses directive calls less frequently.
+It also does not interact directly with the stack as much.
+
+Overall, levels 1 and 3 are similar enough (when used to compile a program of this size/complexity) to treat any minor differences in optimization quality as insignificant.
+Level 0 is not as compact in in file size/length, but better suited should the need to debug/troubleshoot/otherwise update or maintain the assembly version of the program arise. On modern
+computing systems the difference between 0 and 1 or 3 at runtime is minimal anyway, so level 0 is arguably the best choice of the 3 for general purposes and future adaptability.
